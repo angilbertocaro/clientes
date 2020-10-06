@@ -35,7 +35,7 @@ CREATE TABLE `personas`  (
   `primer_apellido` varchar(50) NOT NULL,
   `segundo_apellido` varchar(50) NULL,
   `telefono` varchar(15) NOT NULL,
-  `RFC` varchar(13) NOT NULL,
+  `rfc` varchar(13) NOT NULL,
   PRIMARY KEY (`id`)
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 

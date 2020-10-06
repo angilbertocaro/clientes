@@ -5,21 +5,19 @@ const cors = require('cors');
 
 const app = express();
 
-// parse requests of content-type: application/json
+// Permitimos el acceso a las peticiones 
 app.use(cors());
 app.use(bodyParser.json());
-axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
-
-// parse requests of content-type: application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 // simple route
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to Angilberto application." });
 });
 
-// set port, listen for requests
-const PORT = process.env.PORT || 3000;
+// Configuramos puerto y listener 
+const PORT = 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
