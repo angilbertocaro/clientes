@@ -1,0 +1,25 @@
+{
+  "name": "clientes",
+  "version": "0.0.1",
+  "description": "Sistema",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angilbertocaro/clientes.git"
+  },
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "restapi"
+  ],
+  "author": "Angilberto Caro Zavala",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/angilbertocaro/clientes/issues"
+  },
+  "homepage": "https://github.com/angilbertocaro/clientes#readme"
+}
