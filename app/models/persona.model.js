@@ -31,7 +31,7 @@ Persona.findById = (personaId, result) => {
     }
 
     if (response.length) {
-      console.log("found customer: ", response[0]);
+      console.log("persona encontrada: ", response[0]);
       result(null, response[0]);
       return;
     }

@@ -1,9 +1,9 @@
-const Persona = require("../models/persona.model.js");
+const Direccion = require("../models/direccion.model.js");
 
-// Todas las personas
+// Todas las direcciones
 exports.findAll = (req, res) => {
 
-    Persona.getAll((err, data) => {
+    Direccion.getAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -14,18 +14,18 @@ exports.findAll = (req, res) => {
   
 };
 
-// Persona por ID
+// Direccion por ID
 exports.findOne = (req, res) => {
 
-  Persona.findById(req.params.personaId, (err, data) => {
+    Direccion.findById(req.params.direccionId, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Persona no encontrada.`
+          message: `Direccion no encontrada.`
         });
       } else {
         res.status(500).send({
-          message: "Error buscando persona por la ID " + req.params.personaId
+          message: "Error buscando direccion por la ID " + req.params.direccionId
         });
       }
     } else res.send(data);
@@ -33,7 +33,7 @@ exports.findOne = (req, res) => {
 
 };
 
-// Crear nueva Persona
+// Crear nueva Direccion
 exports.create = (req, res) => {
 
   // Validando informacion
@@ -43,17 +43,16 @@ exports.create = (req, res) => {
     });
   }
 
-  // Creando Persona
-  const persona = new Persona({
-    nombre: req.body.nombre,
-    primer_apellido: req.body.primer_apellido,
-    segundo_apellido: req.body.segundo_apellido,
-    telefono: req.body.telefono,
-    rfc: req.body.rfc
+  // Creando Direccion
+  const direccion = new Direccion({
+    calle: req.body.calle,
+    numero: req.body.numero,
+    colonia: req.body.colonia,
+    codigo_postal: req.body.codigo_postal,
   });
 
-  // Registrando Persona en BD
-  Persona.create(persona, (err, data) => {
+  // Registrando Direccion en BD
+  Direccion.create(direccion, (err, data) => {
     if (err)
       res.status(500).send({
         message:
@@ -64,7 +63,7 @@ exports.create = (req, res) => {
 
 };
 
-// Actualizar Persona
+// Actualizar Direccion
 exports.update = (req, res) => {
 
   // Validando Informacion
@@ -74,15 +73,15 @@ exports.update = (req, res) => {
     });
   }
 
-  Persona.updateById( req.params.personaId, new Persona(req.body), (err, data) => {
+  Direccion.updateById( req.params.direccionId, new Direccion(req.body), (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `No se ha encontrado una persona con la id ${req.params.personaId}.`
+            message: `No se ha encontrado una direccion con la id ${req.params.direccionId}.`
           });
         } else {
           res.status(500).send({
-            message: "error al actualizar la persona con id " + req.params.personaId
+            message: "error al actualizar la direccion con id " + req.params.direccionId
           });
         }
       } else res.send(data);

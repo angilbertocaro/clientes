@@ -18,6 +18,8 @@ app.get("/", (req, res) => {
 
 // Agregando rutas de personas
 require("./app/routes/persona.routes.js")(app);
+// Agregando rutas de direcciones
+require("./app/routes/direccion.routes.js")(app);
 
 // Configuramos puerto y listener 
 const PORT = 4000;
