@@ -2,7 +2,7 @@ const sql = require("./db.js");
 
 // constructor
 const Persona = function(persona) {
-  this.nombre = persona.email;
+  this.nombre = persona.nombre;
   this.primer_apellido = persona.primer_apellido;
   this.segundo_apellido = persona.segundo_apellido;
   this.telefono = persona.telefono;
