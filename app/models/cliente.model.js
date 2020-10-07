@@ -14,8 +14,27 @@ Cliente.getAll = result => {
       result(null, error);
       return;
     }
-    console.log("clientes: ", response);
-    result(null, response);
+
+    var clientes = [];
+    for (let i = 0; i < response.length; i++) {
+
+      sql.query(`SELECT * FROM documentos WHERE id_cliente = ${response[i].id}`, (error, res) => {
+        if (error) {
+          console.log("error: ", error);
+          result(null, error);
+          return;
+        }
+        response[i] = Object.assign({}, response[i], {documentos:res});  
+        clientes.push(response[i]);
+        console.log(clientes);
+
+        if(response.length - i == 1){
+          result(null, clientes);
+        }
+      });
+
+    }
+
   });
 };
 
@@ -29,12 +48,21 @@ Cliente.findById = (clienteId, result) => {
 
     if (response.length) {
       console.log("cliente encontrado: ", response[0]);
-      result(null, response[0]);
-      return;
+      sql.query(`SELECT * FROM documentos WHERE id_cliente = ${response[0].id}`, (error, res) => {
+        if (error) {
+          console.log("error: ", error);
+          result(null, error);
+          return;
+        }
+        response[0] = Object.assign({}, response[0], {documentos:res});  
+        result(null, response[0]);
+        return;
+      });
+    } else {
+      // Cliente no encontrado
+      result({ kind: "not_found" }, null);
     }
-
-    // Cliente no encontrado
-    result({ kind: "not_found" }, null);
+    
   });
 };
 
@@ -135,9 +163,10 @@ Cliente.create = (request, resultado) => {
         });
     });
 
+    // En caso de error retornamos 0
     process.on('uncaughtException', function (error) {
         console.log(error.stack);
-        // resultado(null, { error : "Ha ocurrido un error"});
+        resultado(null, { error : "Ha ocurrido un error", code: 0});
     });
 };
 
