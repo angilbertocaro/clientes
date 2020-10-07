@@ -50,7 +50,9 @@ exports.create = (req, res) => {
             message:
             err.message || "Ha ocurrido un error."
         });
-        else res.send(data);
+        else if(data.error != null){
+          res.status(500).send(data);
+        } else res.send(data);
     });
 };
 
@@ -75,6 +77,8 @@ exports.update = (req, res) => {
             message: "error al actualizar el cliente con id " + req.params.clienteId
           });
         }
+      } if(data.error != null){
+        res.status(500).send(data);
       } else res.send(data);
     }
   );

@@ -178,7 +178,7 @@ Cliente.updateById = (id, cliente, result) => {
     (error, response) => {
       if (error) {
         console.log("error: ", error);
-        result(null, error);
+        result(null, {error: error});
         return;
       }
 
