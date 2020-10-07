@@ -1,6 +1,4 @@
 const Cliente = require("../models/cliente.model.js");
-const Persona = require("../models/persona.model.js");
-const Direccion = require("../models/direccion.model.js");
 
 // Todas los clientes
 exports.findAll = (req, res) => {
@@ -54,67 +52,31 @@ exports.create = (req, res) => {
         });
         else res.send(data);
     });
-  
-    // // Creando Persona
-    // const persona = new Persona({
-    //     nombre: req.body.nombre,
-    //     primer_apellido: req.body.primer_apellido,
-    //     segundo_apellido: req.body.segundo_apellido,
-    //     telefono: req.body.telefono,
-    //     rfc: req.body.rfc
-    // });
+};
 
-    // // Creando Direccion
-    // const direccion = new Direccion({
-    //     calle: req.body.calle,
-    //     numero: req.body.numero,
-    //     colonia: req.body.colonia,
-    //     codigo_postal: req.body.codigo_postal,
-    // });
+// Actualizar Cliente
+exports.update = (req, res) => {
 
-    // var personaId = 0;
-    // var direccionId = 0;
-    // var estatus = 1;
+  // Validando Informacion
+  if (!req.body) {
+    res.status(400).send({
+      message: "La consulta no debe estar vacia"
+    });
+  }
 
-    // // Registrando Persona en BD
-    // Persona.create(persona, (err, data) => {
-    //     if (err)
-    //     res.status(500).send({
-    //         message:
-    //         err.message || "Ha ocurrido un error."
-    //     });
-    //     else {
-    //         personaId = data.id;
+  Cliente.updateById( req.params.clienteId, new Cliente(req.body), (err, data) => {
+      if (err) {
+        if (err.kind === "not_found") {
+          res.status(404).send({
+            message: `No se ha encontrado el cliente con la id ${req.params.clienteId}.`
+          });
+        } else {
+          res.status(500).send({
+            message: "error al actualizar el cliente con id " + req.params.clienteId
+          });
+        }
+      } else res.send(data);
+    }
+  );
 
-    //         // Registrando Direccion en BD
-    //         Direccion.create(direccion, (err, data) => {
-    //             if (err)
-    //             res.status(500).send({
-    //                 message:
-    //                 err.message || "Ha ocurrido un error."
-    //             });
-    //             else {
-    //                 direccionId = data.id;
-
-    //                 // Creando Direccion
-    //                 const cliente = new Cliente({
-    //                     id_persona: personaId,
-    //                     id_direccion: direccionId,
-    //                     estatus: 1,
-    //                 });
-
-    //                 // Registrando Cliene en BD
-    //                 Cliente.create(cliente, (err, data) => {
-    //                     if (err)
-    //                     res.status(500).send({
-    //                         message:
-    //                         err.message || "Ha ocurrido un error."
-    //                     });
-    //                     else res.send(data);
-    //                 });
-    //             }
-    //         });
-    //     }
-    // });
-  
 };

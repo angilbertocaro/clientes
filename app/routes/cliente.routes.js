@@ -10,6 +10,6 @@ module.exports = app => {
     // Crear
     app.post("/cliente", clientes.create);
   
-    // // Actualizar
-    // app.put("/direccion/:direccionId", clientes.update);
+    // Actualizar
+    app.put("/cliente/:clienteId", clientes.update);
 };

@@ -8,6 +8,7 @@ CREATE TABLE `clientes`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_persona` int(11) UNSIGNED NOT NULL,
   `id_direccion` int(11) UNSIGNED NOT NULL,
+  `comentarios` varchar(5000) NULL,
   `estatus` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

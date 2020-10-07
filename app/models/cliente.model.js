@@ -4,6 +4,7 @@ const sql = require("./db.js");
 const Cliente = function(cliente) {
   this.id_persona = cliente.id_persona;
   this.id_direccion = cliente.id_direccion;
+  this.comentarios = cliente.comentarios;
   this.estatus = cliente.estatus;
 };
 
@@ -101,8 +102,8 @@ Cliente.create = (request, resultado) => {
 
                 // Insercion en la tabla clientes con los resultados de las tablas anteriores
                 var direccionId = response.insertId;
-                sql.query("INSERT INTO clientes (id_persona, id_direccion, estatus) VALUES (?,?,?)", 
-                [personId, direccionId, 1], (err, res) => {
+                sql.query("INSERT INTO clientes (id_persona, id_direccion, comentarios, estatus) VALUES (?,?,?,?)", 
+                [personId, direccionId, null, 1], (err, res) => {
                 if (err != null) { 
                     sql.rollback( (error) => {
                     console.log("error: ", error);
@@ -170,10 +171,10 @@ Cliente.create = (request, resultado) => {
     });
 };
 
-Cliente.updateById = (id, direccion, result) => {
+Cliente.updateById = (id, cliente, result) => {
   sql.query(
-    "UPDATE clientes SET calle = ?, numero = ?, colonia = ?, codigo_postal = ? WHERE id = ?",
-    [direccion.calle, direccion.numero, direccion.colonia, direccion.codigo_postal, id],
+    "UPDATE clientes SET id_persona = ?, id_direccion = ?, comentarios = ?, estatus = ? WHERE id = ?",
+    [cliente.id_persona, cliente.id_direccion, cliente.comentarios, cliente.estatus, id],
     (error, response) => {
       if (error) {
         console.log("error: ", error);
@@ -182,12 +183,12 @@ Cliente.updateById = (id, direccion, result) => {
       }
 
       if (response.affectedRows == 0) {
-        // direccion no encontrada
+        // cliente no encontrado
         result({ kind: "not_found" }, null);
         return;
       }
 
-      result(null, { id: id, ...direccion });
+      result(null, { id: id, ...cliente });
     }
   );
 };
