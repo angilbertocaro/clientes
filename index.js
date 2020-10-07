@@ -22,6 +22,8 @@ require("./app/routes/persona.routes.js")(app);
 require("./app/routes/direccion.routes.js")(app);
 // Agregando rutas de clientes
 require("./app/routes/cliente.routes.js")(app);
+// Agregando rutas de documentos
+require("./app/routes/documento.routes.js")(app);
 
 // Configurando Cluster, puerto y servidor http
 const PORT = 4000;
