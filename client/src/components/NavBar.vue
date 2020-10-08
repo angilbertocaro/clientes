@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light" id="header">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom border-gray" id="header">
 
     <h1 class="logo"><a href="#">Clientes</a></h1>
 

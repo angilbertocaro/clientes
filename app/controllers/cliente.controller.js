@@ -14,6 +14,20 @@ exports.findAll = (req, res) => {
   
 };
 
+// Todas los clientes con paginizacion
+exports.findAllPaginated = (req, res) => {
+
+  Cliente.getAllPaginated(req, (err, data) => {
+  if (err)
+    res.status(500).send({
+      message:
+        err.message || "Ha ocurrido un error."
+    });
+  else res.send(data);
+});
+
+};
+
 // Cliente por ID
 exports.findOne = (req, res) => {
 

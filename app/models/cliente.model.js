@@ -39,6 +39,65 @@ Cliente.getAll = result => {
   });
 };
 
+Cliente.getAllPaginated = (req, result) => {
+  // clientes por pagina
+  const limit = req.query.limit
+  // numero de pagina
+  const page = req.query.page
+  // offset
+  const offset = (page - 1) * limit
+
+  sql.query("SELECT * FROM clientes JOIN personas ON clientes.id_persona = personas.id JOIN direcciones ON clientes.id_direccion = direcciones.id limit "+limit+" OFFSET "+offset, (error, response) => {
+    if (error) {
+      console.log("error: ", error);
+      result(null, error);
+      return;
+    }
+
+    var clientes = [];
+    for (let i = 0; i < response.length; i++) {
+
+      sql.query(`SELECT * FROM documentos WHERE id_cliente = ${response[i].id}`, (error, res) => {
+        if (error) {
+          console.log("error: ", error);
+          result(null, error);
+          return;
+        }
+        response[i] = Object.assign({}, response[i], {documentos:res});  
+        clientes.push(response[i]);
+
+        if(response.length - i == 1){
+
+          sql.query("SELECT count(*) as total FROM clientes", (error, response) => {
+            if (error) {
+              console.log("error: ", error);
+              result(null, error);
+              return;
+            }
+
+            var jsonResult = {
+              'pagination': {
+                'total':response[0].total,
+                'current_page':page*1,
+                'per_page': limit*1,
+                'last_page': Math.ceil(response[0].total/limit),
+                'from': ( (page - 1) * limit ) +1,
+                'to': (page * limit > response[0].total ? response[0].total : page * limit),
+              },
+              'clientes':clientes
+            }
+  
+            result(null, jsonResult);
+
+          });  
+        }
+      });
+
+    }
+
+  });
+};
+
 Cliente.findById = (clienteId, result) => {
   sql.query(`SELECT * FROM clientes JOIN personas ON clientes.id_persona = personas.id JOIN direcciones ON clientes.id_direccion = direcciones.id WHERE clientes.id = ${clienteId}`, (error, response) => {
     if (error) {

@@ -1,8 +1,11 @@
 module.exports = app => {
     const clientes = require("../controllers/cliente.controller.js");
-  
+
+    // Paginated
+    app.get("/clientes", clientes.findAllPaginated);
+
     // Index
-    app.get("/clientes", clientes.findAll);
+    app.get("/clientes/all", clientes.findAll);
   
     // Index by ID
     app.get("/cliente/:clienteId", clientes.findOne);

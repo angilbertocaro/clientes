@@ -19,6 +19,19 @@ h1, h2, h3, h4, h5, h6 {
   font-family: "Raleway", sans-serif;
 }
 
+hr {
+  margin: 0 auto;
+  border: none;
+  height: 1px;
+  /* Set the hr color */
+  color: #333; /* old IE */
+  background-color: #333; /* Modern Browsers */
+}
+
+.border-gray{
+  color: #A9A9A9;
+}
+
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -436,4 +449,63 @@ section {
   text-transform: uppercase;
   font-family: "Poppins", sans-serif;
   color: #556270;
+}
+
+.btn:hover { color: white !important; }
+
+#console { 
+  min-height: 100vh;
+  background: whitesmoke;
+  background-size: cover;
+  background-attachment: fixed;
+  background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url('/img/back-pattern.jpg'); 
+  background-size: 500px 600px;
+}
+
+.icon-1x {
+  font-size: 150%;
+}
+
+.align-middle { vertical-align: middle !important; }
+
+
+.container {
+  margin: 0 auto;
+  width: 65%;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    margin: 0 auto;
+    width: 95%;
+  }
+}
+
+.pagination > li > a
+{
+    background-color: white;
+    color: #000000;
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover
+{
+    color: #5a5a5a;
+    background-color: #eee;
+    border-color: #ddd;
+}
+
+.pagination > .active > a
+{
+    color: white;
+    background-color: #383838 !Important;
+    border: solid 1px #383838 !Important;
+}
+
+.pagination > .page-item > .disabled
+{
+    background-color: #EEEEEE;
+    border-color: #EEEEEE;
 }
