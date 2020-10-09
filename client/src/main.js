@@ -8,6 +8,7 @@ Vue.component('Home', require('./components/Home.vue').default);
 Vue.component('Promotores', require('./components/Promotores.vue').default);
 Vue.component('Evaluacion', require('./components/Evaluacion.vue').default);
 Vue.component('NavBar', require('./components/NavBar.vue').default);
+Vue.component('Read', require('./components/Read.vue').default);
 
 new Vue({
   router,

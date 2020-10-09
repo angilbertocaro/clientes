@@ -509,3 +509,7 @@ section {
     background-color: #EEEEEE;
     border-color: #EEEEEE;
 }
+
+.icon-border {
+  text-shadow: 2px 2px #000000;
+}
