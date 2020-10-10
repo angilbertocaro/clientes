@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
+// import 'materialize-css/dist/css/materialize.min.css'
 
 Vue.use(VueFileAgent);
 Vue.use(VueFileAgentStyles);

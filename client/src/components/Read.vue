@@ -79,7 +79,9 @@
                     <div class="col-12 p-0">
                         <div class="row pl-4 mb-2 mt-2">
                             <span class="col-12 p-0 font-weight-bold">Estatus:</span>
-                            <span class="col-12 p-0">Activo</span>
+                            <span v-if="estatus == 1" class="col-12 p-0">Enviado</span>
+                            <span v-else-if="estatus == 2" class="col-12 p-0">Autorizado</span>
+                            <span v-else-if="estatus == 3" class="col-12 p-0">Rechazado</span>
                             <span class="col-12 p-0 mt-2 font-weight-bold">Comentarios:</span>
                             <span class="col-12 pl-0 pr-4 text-justify">{{ comentarios }}</span>
                         </div>

@@ -16,6 +16,9 @@ axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 var publicDir = require('path').join(__dirname,'/app/public');
 app.use(express.static(publicDir));
 
+// app.use(express.json({limit: '50mb'}));
+// app.use(express.urlencoded({limit: '50mb'}));
+
 // Agregando rutas de personas
 require("./app/routes/persona.routes.js")(app);
 // Agregando rutas de direcciones

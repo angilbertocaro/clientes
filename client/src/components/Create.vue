@@ -11,7 +11,7 @@
             </div>
             <div class="row px-0 border-right border-left modal-body bg-light text-dark">
 
-                <div class="col-12 col-sm-6 mb-3">
+                <div class="col-12 col-sm-12 mb-3">
                     <div class="col pl-1">
                         <i class="material-icons pr-1 float-left">info</i>
                         <h5 class="pb-0 font-weight-bold">Información Personal</h5>
@@ -19,27 +19,35 @@
                     
                     <div class="col p-0 mt-2"><hr></div>
 
-                    <div class="col-12 p-0">
-                        <div class="row pl-4 mb-2 mt-2">
-                            <span class="col p-0 font-weight-bold">Nombre(s):</span>
-                            <span class="col p-0 font-weight-bold">Apellido(s):</span>
-                            <div class="w-100"></div>
-                            <span class="col p-0">{{ nombre }}</span>
-                            <span class="col p-0 truncate">{{ apellidos }}</span>
+                    <div class="row p-0 mt-1">
+                         <div class="col-12 col-sm-12 input-field">
+                            <input v-model="nombre" id="nombre" type="text">
+                            <label class="pl-3" for="nombre">Nombre(s)</label>
                         </div>
 
-                        <div class="row pl-4 mb-2 mt-2">
-                            <span class="col p-0 font-weight-bold">Telefono:</span>
-                            <span class="col p-0 font-weight-bold">RFC:</span>
-                            <div class="w-100"></div>
-                            <span class="col p-0">{{ telefono }}</span>
-                            <span class="col p-0 truncate">{{ rfc }}</span>
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="apellido_paterno" id="apellido_Paterno" type="text">
+                            <label class="pl-3" for="apellido_Paterno">Apellido Paterno</label>
+                        </div>
+
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="apellido_materno" id="apellido_Materno" type="text">
+                            <label class="pl-3" for="apellido_Materno">Apellido Materno</label>
+                        </div>
+
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="rfc" id="rfc" type="text">
+                            <label class="pl-3" for="rfc">RFC</label>
+                        </div>
+
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="telefono" id="telefono" type="text">
+                            <label class="pl-3" for="telefono">Telefono</label>
                         </div>
                     </div>
-                
                 </div>
 
-                <div class="col-sm-6 col-12 mb-3">
+                <div class="col-sm-12 col-12 mb-3">
                     <div class="col pl-1">
                         <i class="material-icons pr-1 float-left">place</i>
                         <h5 class="pb-0 font-weight-bold">Dirección</h5>
@@ -47,43 +55,28 @@
                     
                     <div class="col p-0 mt-2"><hr></div> 
                       
-                    <div class="col-12 p-0">
-                        <div class="row pl-4 mb-2 mt-2">
-                            <span class="col p-0 font-weight-bold">Calle:</span>
-                            <span class="col p-0 font-weight-bold">Número:</span>
-                            <div class="w-100"></div>
-                            <span class="col p-0">{{ calle }}</span>
-                            <span class="col p-0 truncate">{{ numero }}</span>
+                    <div class="row p-0 mt-1">
+                         <div class="col-12 col-sm-6 input-field">
+                            <input v-model="calle" id="calle" type="text">
+                            <label class="pl-3" for="calle">Calle</label>
                         </div>
 
-                        <div class="row pl-4 mb-2 mt-2">
-                            <span class="col p-0 font-weight-bold">Colonia:</span>
-                            <span class="col p-0 font-weight-bold">Codigo Postal:</span>
-                            <div class="w-100"></div>
-                            <span class="col p-0">{{ colonia }}</span>
-                            <span class="col p-0 truncate">{{ codigo_postal }}</span>
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="numero" id="numero" type="text">
+                            <label class="pl-3" for="numero">Numero</label>
                         </div>
 
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="colonia" id="colonia" type="text">
+                            <label class="pl-3" for="colonia">Colonia</label>
+                        </div>
+
+                        <div class="col-12 col-sm-6 input-field">
+                            <input v-model="codigo_postal" id="codigo_postal" type="text">
+                            <label class="pl-3" for="codigo_postal">Codigo Postal</label>
+                        </div>
                     </div>
                     
-                </div>
-
-                <div class="col-12 col-sm-12 mb-3">
-                    <div class="col pl-1">
-                        <i class="material-icons pr-1 float-left">assignment_late</i>
-                        <h5 class="pb-0 font-weight-bold">Seguimiento</h5>
-                    </div>
-                    
-                    <div class="col p-0 mt-2"><hr></div>
-
-                    <div class="col-12 p-0">
-                        <div class="row pl-4 mb-2 mt-2">
-                            <span class="col-12 p-0 font-weight-bold">Estatus:</span>
-                            <span class="col-12 p-0">Activo</span>
-                            <span class="col-12 p-0 mt-2 font-weight-bold">Comentarios:</span>
-                            <span class="col-12 pl-0 pr-4 text-justify">{{ comentarios }}</span>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="col-12 col-sm-12 mb-3">
@@ -94,82 +87,166 @@
                     
                     <div class="col p-0 mt-2"><hr></div>
 
-                    <div class="row px-4 pt-3">
-                            <FileIcon :fileData="client.documentos"></FileIcon>
-                    </div>
+                    <VueFileAgent class="mt-4" v-model="fileRecords"
+                    :deletable="true"
+                    :editable="true"
+                    :theme="'list'"
+                    :maxSize="'5MB'"
+                    :maxFiles="100"
+                    :helpText="'Toque para agregar o arrastre dentro'"
+                    :errorText="{
+                    type: 'Formato de archivo invalido.',
+                    size: 'Los archivos no deben exeder los 5 MB',
+                    }"
+                    @beforedelete="onBeforeDelete($event)"
+                    ></VueFileAgent>
                 
                 </div>
 
             </div>
 
             <div class="row border-left border-bottom border-right modal-footer bg-light text-dark">
-                <button @click="toggleModal(0)" type="button" class="btn btn-danger">Cerrar</button>
+                <button @click="uploadInfo()" type="button" class="btn btn-danger">Cerrar</button>
             </div>
-
         </div>
     </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2';
+var axios = require("axios");
 
 export default {
-    props: {
-        client: Object
-    },
     data() {
         return {
-            // data
-            cliente: Object,
 
             nombre: '',
-            apellidos: '',
+            apellido_paterno: '',
+            apellido_materno: '',
             telefono: '',
             rfc: '',
             calle: '',
             numero: '',
             colonia: '',
             codigo_postal: '',
-            estatus: 0,
-            comentarios: '',
+            documentos: [],
+
+            fileRecords: [],
 
         }
     },
     methods: {
-        loadData(){
-            let me = this;
-
-            me.nombre = me.cliente.nombre;
-            me.apellidos = me.cliente.primer_apellido+" "+me.cliente.segundo_apellido;
-            me.telefono = me.cliente.telefono;
-            me.rfc = me.cliente.rfc;
-            me.calle = me.cliente.calle;
-            me.numero = me.cliente.numero;
-            me.colonia = me.cliente.colonia;
-            me.codigo_postal = me.cliente.codigo_postal;
-            me.estatus = me.cliente.estatus;
-
-            if(me.cliente.comentarios == null){
-                if(me.cliente.estatus == 1){
-                    me.comentarios = "Enviado al área de evaluación de prospectos para su revisión.";
-                } else if(me.cliente.estatus == 2){
-                    me.comentarios = "El área de evaluación ha autorizado este prospecto.";
-                } else {
-                     me.comentarios = "Sin Comentarios.";
-                }
-            }else{
-                me.comentarios = me.cliente.comentarios;
-            }
-        },
         // Change Modal
         toggleModal(modal) {
             let me = this;
             me.$emit("change-modal", modal);
         },
+        uploadInfo(){
+            let me = this;
+
+            me.documentos = [];
+
+        
+            me.fileRecords.forEach( (fileRecord, index) =>{
+                const toBase64 = file => new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                });
+
+                async function Main() {
+                    const file = fileRecord.file;
+                    const base64 = await toBase64(file).catch(e => Error(e));
+                    if(base64 instanceof Error) {
+                        console.log('Error: ', base64.message);
+                        return;
+                    }
+                    const ext = fileRecord.ext;
+                    const nombre = fileRecord.name(true);
+
+                    var documento = {
+                        "ext" : ext,
+                        "base64" : base64.split("base64,")[1],
+                        "nombre" : nombre
+                    };
+
+                    me.documentos.push(documento);
+
+                    if(index == me.fileRecords.length-1){
+                        me.createEmployee();
+                    }
+                }
+                Main();
+            });
+            
+
+        },
+        // Create Employee
+        createEmployee() {
+            let me = this;
+            // me.$validator.validateAll('new').then(valid => {
+                // if (valid) {
+                    let formData = new FormData();
+
+                    // formData.append("documentos", me.validate(me.Employee_Boss_ID));
+
+                    console.log(formData);
+
+                    const url = "http://192.168.1.72:4000/cliente";
+                    axios.post(url, {
+                        nombre : me.nombre,
+                        primer_apellido : me.apellido_paterno,
+                        segundo_apellido : me.apellido_materno,
+                        telefono : me.telefono,
+                        rfc : me.rfc,
+                        calle : me.calle,
+                        numero : me.numero,
+                        colonia : me.colonia,
+                        codigo_postal : me.codigo_postal,
+                        documentos : me.documentos,
+                    })
+                    .then((response) => {
+                        console.log(response);
+                        // me.toggleModal();
+                        Swal.fire({
+                            title: 'Empleado Creado!',
+                            text: 'El empleado ha sido creado exitosamente.',
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    })
+                    .catch((error) => {
+                        // me.toggleModal();
+                        console.log(`createEmployee Error: ${error}`);
+                        Swal.fire({
+                            title: 'Error!',
+                            text: "Ha ocurrido un error, intentelo más tarde o contacte a un administrador.",
+                            icon: 'error',
+                            confirmButtonText: 'Aceptar'
+                        });
+                    });
+                // }
+                // else {
+                //     Swal.fire({
+                //         title: 'Información Incorrecta!',
+                //         text: "Corrige la información e intenta de nuevo.",
+                //         icon: 'warning',
+                //         confirmButtonText: 'Aceptar'
+                //     });
+                // }
+            // });
+        },
+        onBeforeDelete: function (fileRecord) {
+            console.log(fileRecord)
+            var i = this.fileRecords.indexOf(fileRecord);
+            console.log(i)
+            if (i !== -1) {
+            this.fileRecords.splice(i, 1);
+            }
+        },
     },
-    async beforeMount() {
-        let me = this;
-        me.cliente = await me.client;
-        me.loadData();
-    }
+    mounted () {
+    },
 }
 </script>
