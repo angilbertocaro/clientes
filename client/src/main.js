@@ -3,7 +3,16 @@ import App from './App.vue'
 import router from './router'
 import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
-// import 'materialize-css/dist/css/materialize.min.css'
+import VeeValidate, { Validator } from "vee-validate";
+import es from 'vee-validate/dist/locale/es';
+
+Validator.localize({ es: es });
+
+Vue.use(VeeValidate, {
+    locale: "es",
+    events: ""
+});
+
 
 Vue.use(VueFileAgent);
 Vue.use(VueFileAgentStyles);

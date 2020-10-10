@@ -1,12 +1,12 @@
 <template>
-    <div class="is-sortable-disabled is-readonly has-multiple is-drag-valid theme-default">
+    <div class="is-sortable-disabled is-readonly has-multiple is-drag-valid theme-list">
         <div class="grid-block-wrapper vue-file-agent file-input-wrapper has-multiple">
             <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper grid-box-item grid-block">
                 
                 <!-- Archivos PDF -->
                 <span v-if="Ext(file) == 'pdf'" class="file-preview other-preview" style="background-color: rgb(193, 30, 7);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -23,7 +23,7 @@
                 <!-- Archivos de Excel -->
                 <span v-else-if="Ext(file) == 'xlsx' || Ext(file) == 'xlsm' || Ext(file) == 'xls' || Ext(file) == 'ods'" class="file-preview other-preview" style="background-color: rgb(48, 114, 63);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -39,7 +39,7 @@
                 <!-- Archivos de Word -->
                 <span v-else-if="Ext(file) == 'docx' || Ext(file) == 'doc' || Ext(file) == 'odt'" class="file-preview other-preview" style="background-color: rgb(35, 114, 186);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -56,7 +56,7 @@
                 <!-- Archivos de Power Point -->
                 <span v-else-if="Ext(file) == 'pptx' || Ext(file) == 'ppt' || Ext(file) == 'odp'" class="file-preview other-preview" style="background-color: rgb(194, 79, 50);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -74,7 +74,7 @@
                 <!-- Archivos de Comprimidos -->
                 <span v-else-if="Ext(file) == 'zip' || Ext(file) == 'rar'" class="file-preview other-preview" style="background-color: rgb(186, 131, 34);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -90,7 +90,7 @@
                 <!-- Archivos de Programacion -->
                 <span v-else-if="Ext(file) == 'xml' || Ext(file) == 'html' || Ext(file) == 'json' || Ext(file) == 'js' || Ext(file) == 'java' || Ext(file) == 'php' || Ext(file) == 'sql'" class="file-preview other-preview" style="background-color: rgba(136, 121, 119, 0.75);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -106,7 +106,7 @@
                 <!-- Archivos de de texto -->
                 <span v-else-if="Ext(file) == 'txt'" class="file-preview other-preview" style="background-color: rgb(107, 83, 59);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">
@@ -156,7 +156,7 @@
                 <!-- Archivos cualquiera -->
                 <span v-else class="file-preview other-preview" style="background-color: rgba(166, 89, 128, 0.75);">                    
                     <span class="file-ext">{{ Ext(file) }}</span>
-                    <span class="file-name p-0">
+                    <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
                     </span>
                     <div class="file-icon">

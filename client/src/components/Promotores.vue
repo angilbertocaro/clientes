@@ -36,7 +36,7 @@
                     <td>{{ cliente.segundo_apellido }}</td>
                     <td>
                         <span v-if="cliente.estatus == 1" >Enviado</span>
-                        <span v-else-if="cliente.estatus == 2" >Aceptado</span>
+                        <span v-else-if="cliente.estatus == 2" >Autorizado</span>
                         <span v-else >Rechazado</span>
                     </td>
                     <td>

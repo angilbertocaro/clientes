@@ -88,7 +88,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-sm-12 mb-3">
+                <div class="col-12 col-sm-12 mb-1">
                     <div class="col pl-1">
                         <i class="material-icons pr-1 float-left">insert_drive_file</i>
                         <h5 class="pb-0 font-weight-bold">Documentos</h5>
@@ -97,7 +97,7 @@
                     <div class="col p-0 mt-2"><hr></div>
 
                     <div class="row px-4 pt-3">
-                            <FileIcon :fileData="client.documentos"></FileIcon>
+                        <FileIcon class="col-12 col-sm-12"  :fileData="client.documentos"></FileIcon>
                     </div>
                 
                 </div>
