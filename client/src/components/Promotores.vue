@@ -8,8 +8,8 @@
                   <i class="icofont-contacts icon-1x align-middle"></i>
                   Prospectos
               </h4>
-              <a class="float-right btn btn-outline-dark">
-                  <i class="icofont-contact-add icon-1x align-middle"></i>
+              <a @click="setModal(1, cliente)" class="float-right btn btn-outline-dark">
+                  <i  class="icofont-contact-add icon-1x align-middle"></i>
                   <span class="pl-2">Agregar</span>
               </a>
           </div>
@@ -41,7 +41,7 @@
                     </td>
                     <td>
                         <div >
-                            <a @click="setModal(2, cliente)"><i class="icofont-eye-alt"></i></a>
+                            <a @click="setModal(2, cliente)"><i class="material-icons btn btn-outline-info">remove_red_eye</i></a>
                         </div>
                     </td>
                 </tr>
@@ -70,6 +70,10 @@
           </div>
 
         </div>
+      </div>
+
+      <div v-if="modal == 1">
+        <Create @change-modal="toggleModal"></Create>
       </div>
 
       <div v-if="modal == 2">
@@ -171,7 +175,6 @@ export default {
             case 0:  me.clearInfo();                        me.modal = 0;   break; // Index
             case 1:  me.clearInfo();                        me.modal = 1;   break; // Create
             case 2:  me.clearInfo();    me.loadInfo(obj);   me.modal = 2;   break; // Read
-            case 3:  me.clearInfo();    me.loadInfo(obj);   me.modal = 3;   break; // Update
             default: me.clearInfo();                        me.modal = 0;   break; // Default(Index)
         }
     },
