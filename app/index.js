@@ -13,20 +13,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 // Agregando ruta estatica publica para recursos y documentos
-var publicDir = require('path').join(__dirname,'/app/public');
+var publicDir = require('path').join(__dirname,'/public');
 app.use(express.static(publicDir));
 
 // app.use(express.json({limit: '50mb'}));
 // app.use(express.urlencoded({limit: '50mb'}));
 
 // Agregando rutas de personas
-require("./app/routes/persona.routes.js")(app);
+require("./routes/persona.routes.js")(app);
 // Agregando rutas de direcciones
-require("./app/routes/direccion.routes.js")(app);
+require("./routes/direccion.routes.js")(app);
 // Agregando rutas de clientes
-require("./app/routes/cliente.routes.js")(app);
+require("./routes/cliente.routes.js")(app);
 // Agregando rutas de documentos
-require("./app/routes/documento.routes.js")(app);
+require("./routes/documento.routes.js")(app);
 
 // Configurando Cluster, puerto y servidor http
 const PORT = 4000;

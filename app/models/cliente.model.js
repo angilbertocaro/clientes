@@ -178,7 +178,7 @@ Cliente.create = (request, resultado) => {
                 documentos.forEach(documento => { 
 
                     // Preparando rutas de archivos y nombres auxiliares
-                    var path ='app/public/documents/';
+                    var path ='public/documents/';
                     let date_ob = new Date();
                     var extencion = documento.ext;
                     var name = "Document-"+date_ob+"."+extencion;
