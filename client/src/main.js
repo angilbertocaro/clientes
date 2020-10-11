@@ -5,6 +5,17 @@ import VueFileAgent from 'vue-file-agent';
 import VueFileAgentStyles from 'vue-file-agent/dist/vue-file-agent.css';
 import VeeValidate, { Validator } from "vee-validate";
 import es from 'vee-validate/dist/locale/es';
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
+
+const store = new Vuex.Store({
+  state: {
+    url : "http://192.168.1.64:4000",
+  },
+  mutations: {
+  }
+})
 
 Validator.localize({ es: es });
 
@@ -31,5 +42,6 @@ Vue.component('Update', require('./components/Update.vue').default);
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

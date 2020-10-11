@@ -144,7 +144,6 @@
 <script>
 import Swal from 'sweetalert2';
 var axios = require("axios");
-// import $ from 'jquery';
 
 export default {
     props: {
@@ -234,7 +233,9 @@ export default {
         autorizarCliente() {
             let me = this;
 
-            const url = "/cliente/"+me.id;
+            me.$emit("loading", true);
+
+            const url = me.Url+"/cliente/"+me.id;
             axios.put(url, {
                 id_persona : me.id_persona,
                 id_direccion : me.id_direccion,
@@ -242,6 +243,7 @@ export default {
                 estatus : 2,
             })
             .then((response) => {
+                me.$emit("loading", false);
                 console.log(response);
                 me.$emit("change-modal", 0);
                 Swal.fire({
@@ -252,6 +254,7 @@ export default {
                 });
             })
             .catch((error) => {
+                me.$emit("loading", false);
                 console.log(`createEmployee Error: ${error}`);
                 Swal.fire({
                     title: 'Error!',
@@ -272,8 +275,9 @@ export default {
                     confirmButtonText: 'Aceptar'
                 });
             } else {
+                me.$emit("loading", true);
     
-                const url = "/cliente/"+me.id;
+                const url = me.Url+"/cliente/"+me.id;
                 axios.put(url, {
                     id_persona : me.id_persona,
                     id_direccion : me.id_direccion,
@@ -281,8 +285,8 @@ export default {
                     estatus : 3,
                 })
                 .then((response) => {
+                    me.$emit("loading", false);
                     console.log(response);
-                    // $('#ModalRechazar').modal('hide');
                     document.querySelector('.close').click();
                     me.$emit("change-modal", 0);
                     Swal.fire({
@@ -293,6 +297,7 @@ export default {
                     });
                 })
                 .catch((error) => {
+                    me.$emit("loading", false);
                     console.log(`createEmployee Error: ${error}`);
                     Swal.fire({
                         title: 'Error!',
@@ -303,6 +308,11 @@ export default {
                 });
             }
         },
+    },
+    computed: {
+        Url() {
+            return this.$store.state.url;
+        }
     },
     async beforeMount() {
         let me = this;

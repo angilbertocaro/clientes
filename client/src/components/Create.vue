@@ -214,8 +214,8 @@ export default {
             let me = this;
             me.$validator.validateAll().then(valid => {
                 if (valid) {
-                    // const url = "http://192.168.1.72:4000/cliente";
-                    const url = "/cliente";
+                    me.$emit("loading", true);
+                    const url = me.Url+"/cliente";
                     axios.post(url, {
                         nombre : me.nombre,
                         primer_apellido : me.apellido_paterno,
@@ -229,6 +229,7 @@ export default {
                         documentos : me.documentos,
                     })
                     .then((response) => {
+                        me.$emit("loading", false);
                         console.log(response);
                         me.$emit("change-modal", 0);
                         Swal.fire({
@@ -239,6 +240,7 @@ export default {
                         });
                     })
                     .catch((error) => {
+                        me.$emit("loading", false);
                         console.log(`createEmployee Error: ${error}`);
                         Swal.fire({
                             title: 'Error!',
@@ -248,6 +250,7 @@ export default {
                         });
                     });
                 } else {
+                    me.$emit("loading", false);
                     Swal.fire({
                         title: 'Información Incorrecta!',
                         text: "Corrige la información e intenta de nuevo.",
@@ -265,6 +268,11 @@ export default {
             this.fileRecords.splice(i, 1);
             }
         },
+    },
+    computed: {
+        Url() {
+            return this.$store.state.url;
+        }
     },
     mounted () {
     },

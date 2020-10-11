@@ -187,9 +187,15 @@ export default {
             return ext;
         },
         Img(file) {
-            var img = "https://prospectos-app.herokuapp.com/documents/"+file.archivo;
+            let me =this;
+            var img = me.Url+"/documents/"+file.archivo;
             return img;
         },
+    },
+    computed: {
+        Url() {
+            return this.$store.state.url;
+        }
     },
     async beforeMount() {
         let me = this;

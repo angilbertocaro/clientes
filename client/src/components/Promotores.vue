@@ -73,7 +73,7 @@
       </div>
 
       <div v-if="modal == 1">
-        <Create @change-modal="toggleModal"></Create>
+        <Create @loading="loading" @change-modal="toggleModal"></Create>
       </div>
 
       <div v-if="modal == 2">
@@ -137,10 +137,14 @@ export default {
     }
   },
   methods: {
+    loading(value) {
+        let me = this;
+        me.$emit("loadingBar", value);
+    },
     loadCustomers(page) {
       let me = this;
 
-      var url = "/clientes?page=" + page +"&limit=6";
+      var url = me.Url+"/clientes?page=" + page +"&limit=6";
       axios.get(url).then((response) => {
           var result = response.data;
           me.arrayClientes = result.clientes;
@@ -205,6 +209,9 @@ export default {
                 from++;
             }
             return pagesArray;             
+        },
+        Url() {
+            return this.$store.state.url;
         }
     }
 }
