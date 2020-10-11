@@ -60,7 +60,7 @@ if (cluster.isMaster) {
   });
 
   // Configuramos puerto y listener 
-  app.listen(PORT, () => {
+  app.listen(process.env.PORT || 4000, () => {
     console.log(`Worker ${process.pid} ejecutandose en puerto ${PORT}.`);
   });
  
