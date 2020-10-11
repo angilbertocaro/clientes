@@ -234,7 +234,7 @@ export default {
         autorizarCliente() {
             let me = this;
 
-            const url = "http://192.168.1.72:4000/cliente/"+me.id;
+            const url = "/cliente/"+me.id;
             axios.put(url, {
                 id_persona : me.id_persona,
                 id_direccion : me.id_direccion,
@@ -273,7 +273,7 @@ export default {
                 });
             } else {
     
-                const url = "http://192.168.1.72:4000/cliente/"+me.id;
+                const url = "/cliente/"+me.id;
                 axios.put(url, {
                     id_persona : me.id_persona,
                     id_direccion : me.id_direccion,

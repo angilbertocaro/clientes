@@ -214,8 +214,8 @@ export default {
             let me = this;
             me.$validator.validateAll().then(valid => {
                 if (valid) {
-                    
-                    const url = "http://192.168.1.72:4000/cliente";
+                    // const url = "http://192.168.1.72:4000/cliente";
+                    const url = "/cliente";
                     axios.post(url, {
                         nombre : me.nombre,
                         primer_apellido : me.apellido_paterno,

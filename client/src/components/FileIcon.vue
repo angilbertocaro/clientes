@@ -187,7 +187,7 @@ export default {
             return ext;
         },
         Img(file) {
-            var img = "http://localhost:4000/documents/"+file.archivo;
+            var img = "https://prospectos-app.herokuapp.com/documents/"+file.archivo;
             return img;
         },
     },

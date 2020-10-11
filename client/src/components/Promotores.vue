@@ -140,7 +140,7 @@ export default {
     loadCustomers(page) {
       let me = this;
 
-      var url = "http://192.168.1.72:4000/clientes?page=" + page +"&limit=6";
+      var url = "/clientes?page=" + page +"&limit=6";
       axios.get(url).then((response) => {
           var result = response.data;
           me.arrayClientes = result.clientes;
