@@ -4,7 +4,10 @@
   "description": "Sistema",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "repository": {
     "type": "git",
@@ -27,10 +30,13 @@
     "axios": "^0.20.0",
     "body-parser": "^1.19.0",
     "cluster": "^0.7.7",
+    "connect-history-api-fallback": "^1.6.0",
     "cors": "^2.8.5",
+    "dateformat": "^3.0.3",
     "express": "^4.17.1",
     "materialize-css": "^1.0.0-rc.2",
     "mysql": "^2.18.1",
+    "randomstring": "^1.1.5",
     "sweetalert2": "^10.3.7",
     "vee-validate": "^2.2.9",
     "vue-file-agent": "^1.7.3",

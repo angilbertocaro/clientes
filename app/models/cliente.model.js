@@ -1,4 +1,6 @@
 const sql = require("./db.js");
+var dateFormat = require('dateformat');
+var randomstring = require("randomstring");
 
 // constructor
 const Cliente = function(cliente) {
@@ -179,9 +181,9 @@ Cliente.create = (request, resultado) => {
 
                     // Preparando rutas de archivos y nombres auxiliares
                     var path ='public/documents/';
-                    let date_ob = new Date();
+                    let date_ob = dateFormat(new Date(), "yyyy-mm-dd:h:MM:ss:l");
                     var extencion = documento.ext;
-                    var name = "Document-"+date_ob+"."+extencion;
+                    var name = "Document-"+date_ob+randomstring.generate(10)+"."+extencion;
                     var fullname = path+name;
                     var base64Str = documento.base64;
 
@@ -194,6 +196,7 @@ Cliente.create = (request, resultado) => {
                     sql.query("INSERT INTO documentos (id_cliente, nombre, archivo) VALUES (?,?,?)", 
                     [clienteId, documento.nombre, name], (err, res) => {
                         if (err != null) { 
+                            console.log(err);
                             sql.rollback( (error) => {
                             console.log("error: ", error);
                             resultado(error, null);

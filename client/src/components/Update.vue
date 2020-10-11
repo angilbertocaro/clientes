@@ -264,7 +264,7 @@ export default {
         rechazarCliente() {
             let me = this;
 
-            if(me.comentarios == null || me.comentarios == "") {
+            if(me.comentarios == null || me.comentarios == "" || me.comentarios.trim() === "") {
                 Swal.fire({
                     title: 'Ingrese Observaciones',
                     text: "Para poder rechazar al prospecto es necesario contar con observaciones",

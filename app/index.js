@@ -1,4 +1,5 @@
 const express = require("express");
+var history = require('connect-history-api-fallback');
 const bodyParser = require("body-parser");
 const axios = require("axios");
 const cors = require('cors');
@@ -27,6 +28,13 @@ require("./routes/direccion.routes.js")(app);
 require("./routes/cliente.routes.js")(app);
 // Agregando rutas de documentos
 require("./routes/documento.routes.js")(app);
+
+app.get('/', (req,res) => {
+  res.sendFile(path.join(__dirname, '/public/index.html'));
+});
+app.use(history());
+app.use(express.static(publicDir));
+
 
 // Configurando Cluster, puerto y servidor http
 const PORT = 4000;

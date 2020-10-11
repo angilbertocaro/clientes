@@ -25,7 +25,7 @@ CREATE TABLE `direcciones`  (
 CREATE TABLE `documentos`  (
   `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
   `id_cliente` int(11) UNSIGNED NOT NULL,
-  `nombre` varchar(50) NOT NULL,
+  `nombre` varchar(500) NOT NULL,
   `archivo` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 )DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
