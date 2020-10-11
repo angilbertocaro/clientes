@@ -6,7 +6,7 @@
           <div class="col-12 mt-5 px-1">
               <h4 class="float-left m-0">
                   <i class="icofont-contacts icon-1x align-middle"></i>
-                  Prospectos
+                  Listado de Prospectos
               </h4>
               <a @click="setModal(1, cliente)" class="float-right btn btn-outline-dark">
                   <i  class="icofont-contact-add icon-1x align-middle"></i>

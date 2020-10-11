@@ -27,6 +27,7 @@ Vue.component('NavBar', require('./components/NavBar.vue').default);
 Vue.component('Read', require('./components/Read.vue').default);
 Vue.component('FileIcon', require('./components/FileIcon.vue').default);
 Vue.component('Create', require('./components/Create.vue').default);
+Vue.component('Update', require('./components/Update.vue').default);
 
 new Vue({
   router,

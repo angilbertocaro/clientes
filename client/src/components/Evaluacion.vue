@@ -1,58 +1,206 @@
 <template>
-  <div class="hello">
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
-    <h1>Evaluacion</h1>
+  <div id="console">
+    <div class="container">
+      <div v-if="modal == 0" class="col-12">
+        <div class="row">
+          <div class="col-12 mt-5 px-1">
+              <h4 class="float-left m-0">
+                  <i class="icofont-contacts icon-1x align-middle"></i>
+                  Listado de Prospectos
+              </h4>
+          </div>
+
+          <hr class="col mt-2 text-dark"/>
+
+          <div class="table-responsive">
+            <table class="table table-striped mt-2 col-12">
+              <thead class="thead-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Nombre(s)</th>
+                  <th>Apellido Paterno</th>
+                  <th>Apellido Materno</th>
+                  <th>Estatus</th>
+                  <th>Acción</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(cliente, index) in arrayClientes" :key="index">
+                    <th>{{ cliente.id }}</th>
+                    <td>{{ cliente.nombre }}</td>
+                    <td>{{ cliente.primer_apellido }}</td>
+                    <td>{{ cliente.segundo_apellido }}</td>
+                    <td>
+                        <span v-if="cliente.estatus == 1" >Enviado</span>
+                        <span v-else-if="cliente.estatus == 2" >Autorizado</span>
+                        <span v-else >Rechazado</span>
+                    </td>
+                    <td>
+                        <a @click="setModal(2, cliente)"><i class="material-icons btn btn-outline-info mr-2">remove_red_eye</i></a>
+                        <a v-if="cliente.estatus == 1" @click="setModal(1, cliente)"><i class="material-icons btn btn-outline-primary">create</i></a>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div v-if="pagination.total" class="col-12 d-flex">
+              <ul class="pagination mx-auto">
+                <li class="page-item" :class="{ disabled: pagination.current_page <= 1 }">
+                  <a href class="page-link" :class="{ disabled: pagination.current_page <= 1 }" @click.prevent="changePage(pagination.current_page - 1)">
+                      <i class="icofont-rounded-left"></i>
+                  </a>
+                </li>
+
+                <li class="page-item" v-for="page in pagesNumber" :key="page" :class="[page == isActive ? 'active' : '']">
+                      <a href class="page-link" @click.prevent="changePage(page)">{{ page }}</a>
+                </li>
+
+                <li class="page-item" :class="{ disabled: pagination.current_page >= pagination.last_page }">
+                  <a href class="page-link" :class="{ disabled: pagination.current_page >= pagination.last_page }" @click.prevent="changePage(pagination.current_page + 1)">
+                      <i class="icofont-rounded-right"></i>
+                  </a>
+                </li>
+              </ul>
+          </div>
+
+        </div>
+      </div>
+
+      <div v-if="modal == 1">
+        <Update :client="cliente" @change-modal="toggleModal"></Update>
+      </div>
+
+      <div v-if="modal == 2">
+        <Read :client="cliente" @change-modal="toggleModal"></Read>
+      </div>
+      
+    </div>
   </div>
 </template>
 
 <script>
+var axios = require("axios");
+
 export default {
-  name: 'Evaluacion',
-  // props: {
-  //   msg: String
-  // }
+  name: 'Promotores',
+  data(){
+    return {
+
+      // Informacion del cliente
+      id: '',
+      estatus: '',
+      comentarios: "",
+
+      // Informacion personal
+      id_persona: '',
+      nombre: "",
+      primer_apellido: "",
+      segundo_apellido: "",
+      telefono: "",
+      rfc: "",
+
+      // Direccion 
+      id_direccion: '',
+      calle: "",
+      numero: "",
+      colonia: "",
+      codigo_postal: "",
+
+      // Informacion de los documentos
+      documentos: [],
+
+      // Datos
+      cliente: null,
+      arrayClientes: [],
+      arrayDocumentos: [],
+
+      // Pagination
+      pagination: {
+          'total': 0, 
+          'current_page': 0, 
+          'per_page': 0, 
+          'last_page': 0, 
+          'from': 0,
+          'to': 0
+      },
+      offset:3,
+
+      // Control
+      modal: 0,
+
+    }
+  },
+  methods: {
+    loadCustomers(page) {
+      let me = this;
+
+      var url = "http://192.168.1.72:4000/clientes?page=" + page +"&limit=6";
+      axios.get(url).then((response) => {
+          var result = response.data;
+          me.arrayClientes = result.clientes;
+          me.pagination = result.pagination;
+      })
+      .catch((error) => {
+          console.log(error);
+      });
+
+    },
+    changePage(page) {
+        let me = this;
+        me.pagination.current_page = page;
+        me.loadCustomers(page);
+    },
+    toggleModal(modal) {
+        let me = this;
+        me.loadCustomers(me.pagination.current_page);
+        me.modal = modal;
+    },
+    clearInfo() {
+        let me = this;
+        me.cliente = null;
+    },
+    loadInfo(cliente) {
+        let me = this;
+        me.cliente = cliente;
+    },
+    setModal(modal, obj) {
+        let me = this;
+        switch(modal) {
+            case 0:  me.clearInfo();                        me.modal = 0;   break; // Index
+            case 1:  me.clearInfo();    me.loadInfo(obj);   me.modal = 1;   break; // Update
+            case 2:  me.clearInfo();    me.loadInfo(obj);   me.modal = 2;   break; // Read
+            default: me.clearInfo();                        me.modal = 0;   break; // Default(Index)
+        }
+    },
+  },
+  beforeMount(){
+    let me = this;
+    me.loadCustomers(1);
+  },
+  computed: {
+        isActive() {
+            return this.pagination.current_page;
+        },
+        pagesNumber() {
+            if (!this.pagination.to)
+                return [];
+            
+            var from = this.pagination.current_page - this.offset; 
+            if (from < 1)
+                from = 1;
+
+            var to = from + (this.offset * 2); 
+            if (to >= this.pagination.last_page)
+                to = this.pagination.last_page;
+
+            var pagesArray = [];
+            while (from <= to) {
+                pagesArray.push(from);
+                from++;
+            }
+            return pagesArray;             
+        }
+    }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
-</style>

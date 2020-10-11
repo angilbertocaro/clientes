@@ -4,7 +4,7 @@
         <div class="mt-5 col-12 p-0 mb-5 px-3">
 
             <div class="row border-bottom-0 modal-header p-1 px-3 bg-dark text-white">
-                <h4 class="modal-title align-self-center font-weight-bold">Prospecto</h4>
+                <h4 class="modal-title align-self-center font-weight-bold">Captura de Prospecto</h4>
                 <a @click="toggleModal(0)" class="btn btn-danger" style="margin: 5px 5px">
                     <i class="icofont-close left"></i>
                 </a>
@@ -109,6 +109,7 @@
                     }"
                     @beforedelete="onBeforeDelete($event)"
                     ></VueFileAgent>
+                    <!-- <test></test> -->
                     <span class="text-danger">{{ errors.first('Documentos') }}</span>
                 
                 </div>
@@ -213,8 +214,7 @@ export default {
             let me = this;
             me.$validator.validateAll().then(valid => {
                 if (valid) {
-                    // formData.append("documentos", me.validate(me.Employee_Boss_ID));
-
+                    
                     const url = "http://192.168.1.72:4000/cliente";
                     axios.post(url, {
                         nombre : me.nombre,
