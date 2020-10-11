@@ -9,8 +9,10 @@ const app = express();
 
 // Permitimos el acceso a las peticiones externas
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: '50000kb' }));
+app.use(bodyParser.raw({ limit: '50000kb' }));
+app.use(bodyParser.text({ limit: '50000kb' }));
+app.use(bodyParser.urlencoded({ limit: '50000kb' }));
 axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 // Agregando ruta estatica publica para recursos y documentos
