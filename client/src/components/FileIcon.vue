@@ -138,6 +138,7 @@
 
                 <!-- Videos -->
                 <span v-else-if="Ext(file) == 'mp4'" class="file-preview image-preview" style="background-color: rgb(66, 62, 45);">
+                    <a :href="Img(file)" target="_blank">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -148,10 +149,12 @@
                             </path>
                         </svg>
                     </span>
+                    </a>
                 </span>
 
                 <!-- Archivos cualquiera -->
                 <span v-else class="file-preview other-preview" style="background-color: rgba(166, 89, 128, 0.75);">                    
+                    <a :href="Img(file)" target="_blank">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -162,8 +165,8 @@
                             </path>
                         </svg>
                     </div>
+                    </a>
                 </span>
-
             </div>
         </div>
     </div>
@@ -201,7 +204,6 @@ export default {
         let me = this;
 
         me.files = await me.fileData;
-        console.log(me.fileData);
     }
 }
 </script>

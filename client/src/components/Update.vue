@@ -174,14 +174,14 @@ export default {
         loadData(){
             let me = this;
 
-            me.nombre = me.cliente.nombre;
-            me.apellidos = me.cliente.primer_apellido+" "+me.cliente.segundo_apellido;
-            me.telefono = me.cliente.telefono;
-            me.rfc = me.cliente.rfc;
-            me.calle = me.cliente.calle;
-            me.numero = me.cliente.numero;
-            me.colonia = me.cliente.colonia;
-            me.codigo_postal = me.cliente.codigo_postal;
+            me.nombre = me.vacio(me.cliente.nombre);
+            me.apellidos = me.vacio(me.cliente.primer_apellido+" "+me.validar(me.cliente.segundo_apellido));
+            me.telefono = me.vacio(me.cliente.telefono);
+            me.rfc = me.vacio(me.cliente.rfc);
+            me.calle = me.vacio(me.cliente.calle);
+            me.numero = me.vacio(me.cliente.numero);
+            me.colonia = me.vacio(me.cliente.colonia);
+            me.codigo_postal = me.vacio(me.cliente.codigo_postal);
             me.estatus = me.cliente.estatus;
             me.id = me.cliente.id;
             me.id_persona = me.cliente.id_persona;
@@ -206,7 +206,7 @@ export default {
             })
             .then((result) => {
                 if (result.value)
-                    me.autorizarCliente();
+                    me.autorizarProspecto();
             });
         },
         rechazar() {
@@ -222,15 +222,14 @@ export default {
             })
             .then((result) => {
                 if (result.value)
-                    me.rechazarCliente();
+                    me.rechazarProspecto();
             });
         },
-        // Change Modal
         toggleModal(modal) {
             let me = this;
             me.$emit("change-modal", modal);
         },
-        autorizarCliente() {
+        autorizarProspecto() {
             let me = this;
 
             me.$emit("loading", true);
@@ -264,7 +263,7 @@ export default {
                 });
             });
         },
-        rechazarCliente() {
+        rechazarProspecto() {
             let me = this;
 
             if(me.comentarios == null || me.comentarios == "" || me.comentarios.trim() === "") {
@@ -307,6 +306,19 @@ export default {
                     });
                 });
             }
+        },
+        vacio(data) {
+            if (data === null || data === '')
+                return "(Vacío)";
+            else 
+                return data;
+        },
+        validar(data) {
+            if(data == null || data == "" || data.trim() === "") {
+                return '';
+            }
+            else
+                return data;
         },
     },
     computed: {

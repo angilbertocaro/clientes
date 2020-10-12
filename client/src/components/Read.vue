@@ -1,6 +1,5 @@
 <template>
     <div class="row">
-        <!-- Read -->
         <div class="mt-5 col-12 p-0 mb-5 px-3">
 
             <div class="row border-bottom-0 modal-header p-1 px-3 bg-dark text-white">
@@ -142,14 +141,14 @@ export default {
         loadData(){
             let me = this;
 
-            me.nombre = me.cliente.nombre;
-            me.apellidos = me.cliente.primer_apellido+" "+me.cliente.segundo_apellido;
-            me.telefono = me.cliente.telefono;
-            me.rfc = me.cliente.rfc;
-            me.calle = me.cliente.calle;
-            me.numero = me.cliente.numero;
-            me.colonia = me.cliente.colonia;
-            me.codigo_postal = me.cliente.codigo_postal;
+            me.nombre = me.vacio(me.cliente.nombre);
+            me.apellidos = me.vacio( me.cliente.primer_apellido+" "+me. validar(me.cliente.segundo_apellido));
+            me.telefono = me.vacio(me.cliente.telefono);
+            me.rfc = me.vacio(me.cliente.rfc);
+            me.calle = me.vacio(me.cliente.calle);
+            me.numero = me.vacio(me.cliente.numero);
+            me.colonia = me.vacio(me.cliente.colonia);
+            me.codigo_postal = me.vacio(me.cliente.codigo_postal);
             me.estatus = me.cliente.estatus;
 
             if(me.cliente.comentarios == null){
@@ -162,6 +161,19 @@ export default {
         toggleModal(modal) {
             let me = this;
             me.$emit("change-modal", modal);
+        },
+        vacio(data) {
+            if (data === null || data === '')
+                return "(Vacío)";
+            else 
+                return data;
+        },
+        validar(data) {
+            if(data == null || data == "" || data.trim() === "") {
+                return '';
+            }
+            else
+                return data;
         },
     },
     async beforeMount() {

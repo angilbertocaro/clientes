@@ -30,10 +30,10 @@
               </thead>
               <tbody>
                 <tr v-for="(cliente, index) in arrayClientes" :key="index">
-                    <th>{{ cliente.id }}</th>
-                    <td>{{ cliente.nombre }}</td>
-                    <td>{{ cliente.primer_apellido }}</td>
-                    <td>{{ cliente.segundo_apellido }}</td>
+                    <th>{{ vacio(cliente.id) }}</th>
+                    <td>{{ vacio(cliente.nombre) }}</td>
+                    <td>{{ vacio(cliente.primer_apellido) }}</td>
+                    <td>{{ vacio(cliente.segundo_apellido) }}</td>
                     <td>
                         <span v-if="cliente.estatus == 1" >Enviado</span>
                         <span v-else-if="cliente.estatus == 2" >Autorizado</span>
@@ -141,7 +141,7 @@ export default {
         let me = this;
         me.$emit("loadingBar", value);
     },
-    loadCustomers(page) {
+    loadProspectos(page) {
       let me = this;
 
       var url = me.Url+"/clientes?page=" + page +"&limit=6";
@@ -158,11 +158,11 @@ export default {
     changePage(page) {
         let me = this;
         me.pagination.current_page = page;
-        me.loadCustomers(page);
+        me.loadProspectos(page);
     },
     toggleModal(modal) {
         let me = this;
-        me.loadCustomers(me.pagination.current_page);
+        me.loadProspectos(me.pagination.current_page);
         me.modal = modal;
     },
     clearInfo() {
@@ -182,10 +182,16 @@ export default {
             default: me.clearInfo();                        me.modal = 0;   break; // Default(Index)
         }
     },
+    vacio(data) {
+        if (data === null || data === '')
+            return "(Vacío)";
+        else 
+            return data;
+    },
   },
   beforeMount(){
     let me = this;
-    me.loadCustomers(1);
+    me.loadProspectos(1);
   },
   computed: {
         isActive() {

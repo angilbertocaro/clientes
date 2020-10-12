@@ -1,6 +1,5 @@
 <template>
     <div class="row">
-        <!-- Read -->
         <div class="mt-5 col-12 p-0 mb-5 px-3">
 
             <div class="row border-bottom-0 modal-header p-1 px-3 bg-dark text-white">
@@ -39,7 +38,7 @@
                         </div>
 
                         <div class="col-12 col-sm-6 input-field">
-                            <input v-validate="'required|max:15'" name="RFC" v-model="rfc" id="rfc" type="text">
+                            <input v-validate="'required|max:15'" name="RFC" v-model="rfc" id="rfc" type="text" style="text-transform:uppercase">
                             <label class="pl-3" for="rfc">RFC</label>
                             <span class="text-danger">{{ errors.first('RFC') }}</span>
                         </div>
@@ -96,7 +95,7 @@
                     
                     <div class="col p-0 mt-2"><hr></div>
 
-                    <VueFileAgent class="mt-4" v-validate="'required'" name="Documentos" v-model="fileRecords"
+                    <VueFileAgent class="mt-4" v-model="fileRecords"
                     :deletable="true"
                     :editable="true"
                     :theme="'list'"
@@ -109,7 +108,8 @@
                     }"
                     @beforedelete="onBeforeDelete($event)"
                     ></VueFileAgent>
-                    <!-- <test></test> -->
+                    
+                    <input v-validate="'required'" name="Documentos" v-model="documentos" hidden>
                     <span class="text-danger">{{ errors.first('Documentos') }}</span>
                 
                 </div>
@@ -131,7 +131,6 @@ var axios = require("axios");
 export default {
     data() {
         return {
-
             nombre: "",
             apellido_paterno: "",
             apellido_materno: "",
@@ -142,16 +141,12 @@ export default {
             colonia: "",
             codigo_postal: "",
             documentos: [],
-
             fileRecords: [],
-
         }
     },
     methods: {
-        // Change Modal
         toggleModal(modal) {
             let me = this;
-
             Swal.fire({
                 title: 'Si sale se perdera toda la informacion capturada!',
                 text: "Estás seguro que deseas salir?",
@@ -172,15 +167,16 @@ export default {
             me.documentos = [];
 
             if(me.fileRecords.length == 0){
-                me.crearCliente();
+                me.crearProspecto();
             }
         
-            me.fileRecords.forEach( (fileRecord, index) =>{
+            me.fileRecords.forEach( (fileRecord,index) =>{
+
                 const toBase64 = file => new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
+                    const reader = new FileReader();
+                    reader.readAsDataURL(file);
+                    reader.onload = () => resolve(reader.result);
+                    reader.onerror = error => reject(error);
                 });
 
                 async function Main() {
@@ -202,15 +198,22 @@ export default {
                     me.documentos.push(documento);
 
                     if(index == me.fileRecords.length-1){
-                        me.crearCliente();
+                        me.crearProspecto();
                     }
                 }
-                Main();
+
+                if(fileRecord.size <= 5000000){
+                    Main();
+                }else{
+                    if(index == me.fileRecords.length-1){
+                        me.crearProspecto();
+                    }
+                }
             });
             
 
         },
-        crearCliente() {
+        crearProspecto() {
             let me = this;
             me.$validator.validateAll().then(valid => {
                 if (valid) {
@@ -219,9 +222,9 @@ export default {
                     axios.post(url, {
                         nombre : me.nombre,
                         primer_apellido : me.apellido_paterno,
-                        segundo_apellido : me.apellido_materno,
+                        segundo_apellido : me.validar(me.apellido_materno),
                         telefono : me.telefono,
-                        rfc : me.rfc,
+                        rfc : me.rfc.toUpperCase(),
                         calle : me.calle,
                         numero : me.numero,
                         colonia : me.colonia,
@@ -241,7 +244,7 @@ export default {
                     })
                     .catch((error) => {
                         me.$emit("loading", false);
-                        console.log(`createEmployee Error: ${error}`);
+                        console.log(`Error: ${error}`);
                         Swal.fire({
                             title: 'Error!',
                             text: "Ha ocurrido un error, intentelo más tarde o contacte a un administrador.",
@@ -252,7 +255,7 @@ export default {
                 } else {
                     me.$emit("loading", false);
                     Swal.fire({
-                        title: 'Información Incorrecta!',
+                        title: 'Información Incorrecta o Incompleta!',
                         text: "Corrige la información e intenta de nuevo.",
                         icon: 'warning',
                         confirmButtonText: 'Aceptar'
@@ -260,10 +263,15 @@ export default {
                 }
             });
         },
+        validar(data) {
+            if(data == null || data == "" || data.trim() === "") {
+                return null;
+            }
+            else
+                return data;
+        },
         onBeforeDelete: function (fileRecord) {
-            console.log(fileRecord)
             var i = this.fileRecords.indexOf(fileRecord);
-            console.log(i)
             if (i !== -1) {
             this.fileRecords.splice(i, 1);
             }
@@ -273,8 +281,6 @@ export default {
         Url() {
             return this.$store.state.url;
         }
-    },
-    mounted () {
     },
 }
 </script>
