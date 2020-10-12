@@ -418,3 +418,12 @@ hr {
     transform: rotate(360deg);
   }
 }
+
+.rounded {
+  padding: 2px 5px;
+  border-radius: 30px;
+}
+
+i.large {
+  font-size: 6rem;
+}

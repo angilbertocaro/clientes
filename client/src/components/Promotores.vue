@@ -9,44 +9,49 @@
                   Listado de Prospectos
               </h4>
               <a @click="setModal(1, cliente)" class="float-right btn btn-outline-dark">
-                  <i  class="icofont-contact-add icon-1x align-middle"></i>
+                  <i class="icofont-contact-add icon-1x align-middle"></i>
                   <span class="pl-2">Agregar</span>
               </a>
           </div>
 
           <hr class="col mt-2 text-dark"/>
 
-          <div class="table-responsive">
+          <div v-if="pagination.total" class="table-responsive">
             <table class="table table-striped mt-2 col-12">
-              <thead class="thead-dark">
+              <thead class="bg-dark text-white">
                 <tr>
-                  <th>#</th>
-                  <th>Nombre(s)</th>
-                  <th>Apellido Paterno</th>
-                  <th>Apellido Materno</th>
-                  <th>Estatus</th>
-                  <th>Acción</th>
+                  <th class="align-middle">#</th>
+                  <th class="align-middle">Nombre(s)</th>
+                  <th class="align-middle">Apellido Paterno</th>
+                  <th class="align-middle">Apellido Materno</th>
+                  <th class="align-middle">Estatus</th>
+                  <th class="align-middle">Acción</th>
                 </tr>
               </thead>
               <tbody>
                 <tr v-for="(cliente, index) in arrayClientes" :key="index">
-                    <th>{{ vacio(cliente.id) }}</th>
-                    <td>{{ vacio(cliente.nombre) }}</td>
-                    <td>{{ vacio(cliente.primer_apellido) }}</td>
-                    <td>{{ vacio(cliente.segundo_apellido) }}</td>
-                    <td>
-                        <span v-if="cliente.estatus == 1" >Enviado</span>
-                        <span v-else-if="cliente.estatus == 2" >Autorizado</span>
-                        <span v-else >Rechazado</span>
+                    <th class="align-middle">{{ vacio(cliente.id) }}</th>
+                    <td class="align-middle">{{ vacio(cliente.nombre) }}</td>
+                    <td class="align-middle">{{ vacio(cliente.primer_apellido) }}</td>
+                    <td class="align-middle">{{ vacio(cliente.segundo_apellido) }}</td>
+                    <td class="align-middle">
+                        <span v-if="cliente.estatus == 1" class="text-light bg-info rounded">Enviado</span>
+                        <span v-else-if="cliente.estatus == 2" class="text-light bg-success rounded">Autorizado</span>
+                        <span v-else class="text-light bg-danger rounded">Rechazado</span>
                     </td>
                     <td>
                         <div >
-                            <a @click="setModal(2, cliente)"><i class="material-icons btn btn-outline-info">remove_red_eye</i></a>
+                            <a @click="setModal(2, cliente)"><i class="material-icons btn btn-outline-primary">remove_red_eye</i></a>
                         </div>
                     </td>
                 </tr>
               </tbody>
             </table>
+          </div>
+
+          <div v-else class="table-responsive text-secondary mt-5 text-center">
+              <i class="large material-icons text-secondary">assignment</i>
+              <h5 class="text-secondary">No hay Prospectos Registrados</h5>
           </div>
 
           <div v-if="pagination.total" class="col-12 d-flex">
@@ -160,9 +165,15 @@ export default {
         me.pagination.current_page = page;
         me.loadProspectos(page);
     },
-    toggleModal(modal) {
+    async toggleModal(modal) {
         let me = this;
-        me.loadProspectos(me.pagination.current_page);
+        if(me.pagination.current_page > 0){
+          await me.loadProspectos(me.pagination.current_page);
+        }
+        else {
+          await me.loadProspectos(1);
+        }
+
         me.modal = modal;
     },
     clearInfo() {

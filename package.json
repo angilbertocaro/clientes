@@ -1,6 +1,6 @@
 {
   "name": "clientes",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Sistema",
   "main": "index.js",
   "scripts": {
