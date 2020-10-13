@@ -427,3 +427,33 @@ hr {
 i.large {
   font-size: 6rem;
 }
+
+.m-dialog {
+  width: 80%;
+  max-width: none;
+  height: 80%;
+  max-height: none;
+}
+
+.m-content {
+  height: 100%;
+}
+.m-body {
+  overflow-y: auto;
+}
+
+.m-object {
+  object-fit: contain;
+}
+
+.fade-enter-active {
+  transition: opacity 1.5s
+}
+
+.fade-leave-active {
+  transition: opacity 0s
+}
+
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}

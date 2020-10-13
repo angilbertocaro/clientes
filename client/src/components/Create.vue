@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="mt-5 col-12 p-0 mb-5 px-3">
+        <div class="mt-4 col-12 p-0 mb-5 px-3">
 
             <div class="row border-bottom-0 modal-header p-1 px-3 bg-dark text-white">
                 <h4 class="modal-title align-self-center font-weight-bold">Captura de Prospecto</h4>

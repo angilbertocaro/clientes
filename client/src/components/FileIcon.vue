@@ -1,11 +1,12 @@
 <template>
+<div>
     <div class="is-sortable-disabled is-readonly has-multiple is-drag-valid theme-list">
         <div class="grid-block-wrapper vue-file-agent file-input-wrapper has-multiple">
             <div v-for="(file, index) in files" :key="index" class="file-preview-wrapper grid-box-item grid-block">
                 
                 <!-- Archivos PDF -->
                 <span v-if="Ext(file) == 'pdf'" class="file-preview other-preview" style="background-color: rgb(193, 30, 7);">   
-                    <a :href="Img(file)" target="_blank">                 
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">                 
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -21,7 +22,7 @@
 
                 <!-- Archivos de Excel -->
                 <span v-else-if="Ext(file) == 'xlsx' || Ext(file) == 'xlsm' || Ext(file) == 'xls' || Ext(file) == 'ods'" class="file-preview other-preview" style="background-color: rgb(48, 114, 63);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -37,7 +38,7 @@
 
                 <!-- Archivos de Word -->
                 <span v-else-if="Ext(file) == 'docx' || Ext(file) == 'doc' || Ext(file) == 'odt'" class="file-preview other-preview" style="background-color: rgb(35, 114, 186);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -54,7 +55,7 @@
 
                 <!-- Archivos de Power Point -->
                 <span v-else-if="Ext(file) == 'pptx' || Ext(file) == 'ppt' || Ext(file) == 'odp'" class="file-preview other-preview" style="background-color: rgb(194, 79, 50);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -72,7 +73,7 @@
 
                 <!-- Archivos de Comprimidos -->
                 <span v-else-if="Ext(file) == 'zip' || Ext(file) == 'rar'" class="file-preview other-preview" style="background-color: rgb(186, 131, 34);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -88,7 +89,7 @@
 
                 <!-- Archivos de Programacion -->
                 <span v-else-if="Ext(file) == 'xml' || Ext(file) == 'html' || Ext(file) == 'json' || Ext(file) == 'js' || Ext(file) == 'java' || Ext(file) == 'php' || Ext(file) == 'sql'" class="file-preview other-preview" style="background-color: rgba(136, 121, 119, 0.75);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -104,7 +105,7 @@
 
                 <!-- Archivos de de texto -->
                 <span v-else-if="Ext(file) == 'txt'" class="file-preview other-preview" style="background-color: rgb(107, 83, 59);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -120,7 +121,7 @@
 
                 <!-- Imagenes -->
                 <span v-else-if="Ext(file) == 'jpg' || Ext(file) == 'png' || Ext(file) == 'jpeg'" class="file-preview image-preview" style="background-color: rgb(146, 152, 84);">
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -138,7 +139,7 @@
 
                 <!-- Videos -->
                 <span v-else-if="Ext(file) == 'mp4'" class="file-preview image-preview" style="background-color: rgb(66, 62, 45);">
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -154,7 +155,7 @@
 
                 <!-- Archivos cualquiera -->
                 <span v-else class="file-preview other-preview" style="background-color: rgba(166, 89, 128, 0.75);">                    
-                    <a :href="Img(file)" target="_blank">
+                    <a @click="currentFile = file ;preview=true" data-toggle="modal" data-target="#ModalPreview" href="#">
                     <span class="file-ext">{{ Ext(file) }}</span>
                     <span class="file-name p-0 p-1">
                         <span class="file-name-text">{{ file.nombre }}</span>
@@ -168,8 +169,45 @@
                     </a>
                 </span>
             </div>
+
+            <div v-if="preview">
+            <div class="modal m-backdrop fade" id="ModalPreview" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered m-dialog">
+                        <div class="modal-content m-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title font-weight-bold" id="exampleModalLabel">{{ currentFile.nombre }}</h5>
+                            <button @click="currentFile = '';preview=false" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body m-body">
+                            <object v-if="!errorOnLoad && extensions.includes(Ext(currentFile))" :data="Img(currentFile)" class="p-2 m-object" width="100%" @error="errorOnLoad = true" height="100%">
+                                <embed :src="Img(currentFile)" type="application/*" />
+                            </object>
+                            <div v-else class="mt-5">
+                                <i class="material-icons large">insert_drive_file</i>
+                                <h6>
+                                No se pudo cargar la vista previa.
+                                <br>
+                                Es posible que el documento que desea ver no tenga vista previa, puede intentar descargarlo para poder visualizarlo:
+                                </h6>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <a :href="Img(currentFile)" download class="btn btn-primary">
+                            Descargar
+                            </a>
+                            <button @click="currentFile = '';preview=false" type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -182,6 +220,10 @@ export default {
         return {
             // data
             files: Array,
+            errorOnLoad : false,
+            currentFile: '',
+            extensions: ['svg', 'jpg', 'jpeg', 'png', 'pdf', 'mp4', 'gif'],
+            preview: false
         }
     },
     methods: {

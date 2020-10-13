@@ -1,6 +1,7 @@
 <template>
   <div id="console">
     <div class="container">
+      <transition appear name="fade">
       <div v-if="modal == 0" class="col-12">
         <div class="row">
           <div class="col-12 mt-5 px-1">
@@ -41,7 +42,8 @@
                     </td>
                     <td>
                         <div >
-                            <a @click="setModal(2, cliente)"><i class="material-icons btn btn-outline-primary">remove_red_eye</i></a>
+                            <a @click="setModal(2, cliente)"><i class="material-icons btn btn-outline-primary mr-2 mb-2 mb-xl-0">remove_red_eye</i></a>
+                            <a v-if="cliente.estatus == 1" @click="eliminar(cliente)"><i class="material-icons btn btn-outline-danger">delete</i></a>
                         </div>
                     </td>
                 </tr>
@@ -76,20 +78,26 @@
 
         </div>
       </div>
+      </transition>
 
+      <transition name="fade">
       <div v-if="modal == 1">
         <Create @loading="loading" @change-modal="toggleModal"></Create>
       </div>
+      </transition>
 
+      <transition name="fade">
       <div v-if="modal == 2">
         <Read :client="cliente" @change-modal="toggleModal"></Read>
       </div>
+      </transition>
       
     </div>
-  </div>
+    </div>
 </template>
 
 <script>
+import Swal from 'sweetalert2';
 var axios = require("axios");
 
 export default {
@@ -165,14 +173,9 @@ export default {
         me.pagination.current_page = page;
         me.loadProspectos(page);
     },
-    async toggleModal(modal) {
+    toggleModal(modal) {
         let me = this;
-        if(me.pagination.current_page > 0){
-          await me.loadProspectos(me.pagination.current_page);
-        }
-        else {
-          await me.loadProspectos(1);
-        }
+        me.loadProspectos(me.pagination.current_page);
 
         me.modal = modal;
     },
@@ -198,6 +201,56 @@ export default {
             return "(Vacío)";
         else 
             return data;
+    },
+    eliminar(prospecto) {
+        let me = this;
+
+        Swal.fire({
+            title: 'Eliminar Prospecto',
+            text: "El prospecto no ha sido evaluado. Estás seguro que deseas eliminarlo?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar',
+            cancelButtonText: 'Cancelar'
+        })
+        .then((result) => {
+            if (result.value)
+                me.eliminarProspecto(prospecto);
+        });
+    },
+    eliminarProspecto(prospecto) {
+      let me = this;
+
+      me.loading(true);
+
+      const url = me.Url+"/cliente/"+prospecto.id;
+      axios.put(url, {
+          id_persona : prospecto.id_persona,
+          id_direccion : prospecto.id_direccion,
+          comentarios : null,
+          estatus : 0,
+      })
+      .then((response) => {
+          me.loading(false);
+          console.log(response);
+          me.loadProspectos(1);
+          Swal.fire({
+              title: 'Prospecto Eliminado!',
+              text: 'El prospecto ha sido eliminado.',
+              icon: 'success',
+              confirmButtonText: 'Aceptar'
+          });
+      })
+      .catch((error) => {
+          me.loading(false);
+          console.log(`createEmployee Error: ${error}`);
+          Swal.fire({
+              title: 'Error!',
+              text: "Ha ocurrido un error, intentelo más tarde o contacte a un administrador.",
+              icon: 'error',
+              confirmButtonText: 'Aceptar'
+          });
+      });
     },
   },
   beforeMount(){

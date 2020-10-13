@@ -18,6 +18,22 @@ Cliente.getAll = result => {
       return;
     }
 
+    if(response.length == 0){
+      var jsonResult = {
+        'pagination': {
+          'total':0,
+          'current_page':page*1,
+          'per_page': limit*1,
+          'last_page': Math.ceil(0/limit),
+          'from': 0,
+          'to': 0,
+        },
+        'clientes':clientes
+      }
+
+      result(null, jsonResult);
+    }
+
     var clientes = [];
     for (let i = 0; i < response.length; i++) {
 
@@ -49,11 +65,27 @@ Cliente.getAllPaginated = (req, result) => {
   // offset
   const offset = (page - 1) * limit
 
-  sql.query("SELECT * FROM clientes JOIN personas ON clientes.id_persona = personas.id JOIN direcciones ON clientes.id_direccion = direcciones.id limit "+limit+" OFFSET "+offset, (error, response) => {
+  sql.query("SELECT * FROM clientes JOIN personas ON clientes.id_persona = personas.id JOIN direcciones ON clientes.id_direccion = direcciones.id WHERE NOT clientes.estatus=0 limit "+limit+" OFFSET "+offset, (error, response) => {
     if (error) {
       console.log("error: ", error);
       result(null, error);
       return;
+    }
+
+    if(response.length == 0){
+      var jsonResult = {
+        'pagination': {
+          'total':0,
+          'current_page':page*1,
+          'per_page': limit*1,
+          'last_page': Math.ceil(0/limit),
+          'from': 0,
+          'to': 0,
+        },
+        'clientes':clientes
+      }
+
+      result(null, jsonResult);
     }
 
     var clientes = [];

@@ -1,6 +1,7 @@
 <template>
   <div id="console">
     <div class="container">
+      <transition appear name="fade">
       <div v-if="modal == 0" class="col-12">
         <div class="row">
           <div class="col-12 mt-5 px-1">
@@ -71,14 +72,19 @@
 
         </div>
       </div>
+      </transition>
 
-      <div v-if="modal == 1">
-        <Update  @loading="loading" :client="cliente" @change-modal="toggleModal"></Update>
-      </div>
+      <transition name="fade">
+        <div v-if="modal == 1">
+          <Update @loading="loading" :client="cliente" @change-modal="toggleModal"></Update>
+        </div>
+      </transition>
 
+      <transition name="fade">
       <div v-if="modal == 2">
         <Read :client="cliente" @change-modal="toggleModal"></Read>
       </div>
+      </transition>
       
     </div>
   </div>
